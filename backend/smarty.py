@@ -118,47 +118,13 @@ def modelhandle(data):
     import pytz
     from PIL import Image
 
-
-    # Prepare the data for the model
-    # X = df_with_features.drop(columns=['volume', 'timestamp', 'Price_Diff', 'future'])
-    # y = df_with_features['future'].shift(-1).dropna()
-    # X = X.iloc[:-1]  # Remove the last row to match the target variable length
-
-    # Split the data into training and testing sets
-    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-    # Standardize the features
-    # scaler = StandardScaler()
-    # X_train = scaler.fit_transform(X_train)
-    # X_test = scaler.transform(X_test)
-
-    # Train the Random Forest model
-    # model = RandomForestRegressor(n_estimators=90, random_state=42)
-    # model.fit(X_train, y_train)
-
-    # Predict and evaluate the model
-    # y_pred = model.predict(X_test)
-    # mse = mean_squared_error(y_test, y_pred)
-    # print(f'Mean Squared Error: {mse}')
-
-    # Get feature importances
-    # feature_importances = model.feature_importances_
-    # features = X.columns
-
-    # Create a DataFrame for visualization
-    # feature_importance_df = pd.DataFrame({'Feature': features, 'Importance': feature_importances})
-    # feature_importance_df = feature_importance_df.sort_values(by='Importance', ascending=False)
-
-    # Plot the feature importances
-
-    # Model handling with LSTM
     tr = 8
     fut = 8
     freedom = 2
     df_with_features,timi = compute_features(tr, fut, data)
 
     # Load the LSTM model
-    model = load_model(f'{tr}_{fut}min.keras')
+    model = load_model(f'{tr}_{fut}min(pro).keras')
     fut += freedom
     data = df_with_features
     closes=df_with_features['close']
