@@ -1,38 +1,251 @@
 .App {
   text-align: center;
+  /* display: flex; */
+  justify-content: center;
+  /* align-items: center; */
+  width: 100%;
+  min-height: 100vh;
+}
+.head {
+  /* background-color: #057025; */
+  width: 100%;
+  color: #dafce7;
+  text-shadow: #013336 4px 4px 5px;
+  /* margin: 0 0 10%; */
+  /* position: relative; */
+  /* left: -50px; */
+}
+.head1 {
+  /* background-color: #057025; */
+  width: 100%;
+  color: #e1fcda;
+  text-shadow: #013336 4px 4px 5px;
+  font-family: cursive;
+  /* position: relative; */
+  /* left: -50px; */
+}
+/* CSS */
+.button-52 {
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  padding: 3px 5px 80px 0;
+  height: 40px;
+  outline: 0;
+  border: 1px solid rgb(0, 0, 0);
+  cursor: pointer;
+  position: relative;
+  margin-top: 40px;
+  margin-bottom: 50px;
+  top: 7px;
+  /* left: 17%; */
+  background-color: rgb(255, 225, 32);
+  user-select: none;
+  /* margin: 0px 20px; */
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
-.App-logo {
-  height: 40vmin;
+.button-52:after {
+  content: "";
+  background-color: #312900;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 40px;
+  top: 7px;
+  left: 7px;
+  transition: 0.1s;
+}
+
+.button-52:hover:after {
+  top: 0px;
+  left: 0px;
+  /* z-index: 0; */
+}
+
+@media (min-width: 768px) {
+  .button-52 {
+    padding: 8px 20px 8px;
+  }
+}
+
+.inputbox {
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.inputbox input {
+  position: relative;
+  width: 90%;
+  padding: 20px 10px 5px 10px;
+  background: transparent;
+  z-index: 10;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  /* margin-bottom: 10px; */
+  top: 0;
+  color: hsl(0, 0%, 0%);
+  font-size: 30px;
+  letter-spacing: 0.05em;
+  transition: 0.5s;
+  /* z-index: 0; */
+}
+
+.inputbox span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 20px 10px 10px;
+  font-size: 30px;
+  color: #000000;
+  letter-spacing: 00.05em;
+  transition: 0.5s;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.inputbox input:valid ~ span,
+.inputbox input:focus ~ span {
+  color: transparent;
+  transform: translateX(-10px) translateY(-34px);
+  font-size: 0, 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.inputbox i {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  /* font-size: 10%; */
+  width: 100%;
+  height: 2px;
+  background: #c9f1a3;
+  border-radius: 6px;
+  transition: 0.5s;
+  pointer-events: none;
+  z-index: 9;
+}
+
+.inputbox input:valid ~ i,
+.inputbox input:focus ~ i {
+  height: 44px;
+}
+
+.h11 {
+  color: #033b3f;
+  font-size: x-large;
+}
+
+.shares-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* height: 500px; */
+  gap: 8px 16px;
+  padding: 16px;
+}
+.share {
+  border: 2px solid #302e2eb6;
+  padding: 0 16px;
+  border-radius: 8px;
+  background-color: rgba(243, 136, 136, 0.457);
+  width: 315px;
+  text-align: center;
+  /* box-shadow: 0 0 8px 8px 4px rgb(0, 0, 0); */
+  height: 390px;
+  z-index: 0;
+}
+.share span {
+  font-size: 20px;
+  padding: 10px 10px 10px 10px;
+  text-align: center;
+  display: inline-block;
+  margin-right: 8px; /* Space between spans */
+  color: #555;
+  background-color: #dafce7;
+  border-bottom: 2px solid black;
+}
+.login-box {
+  /* position: relative; */
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  /* width: 100%; */
+  /* margin: 0 0 0 auto; */
+  height: auto;
 }
-
-.App-link {
-  color: #61dafb;
+.share h1 {
+  background-color: #ffffff;
+  margin-bottom: 40px;
+  border-bottom: 2px solid rgb(153, 227, 100);
 }
+.share div {
+  margin-bottom: 8px;
+}
+.login-box2 {
+  /* top: 45%; */
+  /* left: 35%; */
+  position: relative;
+  left: 30%;
+  top: 10%;
+  z-index: 0;
+  max-width: 35%;
+  min-height: 300px; /* Minimum height */
+  height: auto;
+  /* height: auto; */
+  /* height: auto; */
+  padding: 5px 40px;
+  /* transform: translate(50%, 50%); */
+  /* transition: 1s; */
+  background: rgba(128, 229, 133, 0.987);
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  /* margin: 70% 10%; */
+}
+.hll {
+  color: #ffffff;
+  background-color: rgb(255, 0, 0);
+}
+.hll:after {
+  background-color: rgb(119, 2, 2);
+  margin: 0;
+}
+.hb {
+  background-color: #48eb87;
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  margin-left: 20px;
+  width: 100px;
+  padding: 1px;
+  margin-bottom: 10px;
+  /* margin: 0px; */
+}
+.hb:after {
+  background-color: rgb(7, 51, 0);
+  /* margin-left: 20px; */
+  left: -7px;
+  /* margin-bottom: ; */
+}
+.login-box3 {
+  display: none;
+  background-color: yellow;
+  width: 10px;
+}
+.stt {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px; /* Adjust the gap between items as needed */
+  /* height: 500px; */
+}
+.alerts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px; /* Adjust the gap between items as needed */
+  width: 99%;
+}
+.misc-container {
+  display: flex;
+  justify-content: center;
+}
+.chartdiv {
+  width: 900px;
 }
