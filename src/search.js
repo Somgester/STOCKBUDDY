@@ -16,6 +16,8 @@ const Search = () => {
     setProfit,
     setal,
     shares,
+    update,
+    setupdate,
     setText,
     al,
     qty,
@@ -60,10 +62,14 @@ const Search = () => {
           },
           body: JSON.stringify({ symbol: text, price: data[0], qtx: qty }),
         })
-          .then((response) => console.log(response.json()))
-          .then(() =>
-            fetchShares(setShares, setLoading, shares, setProfitnow, setProfit)
-          )
+          .then((response) => {
+            setupdate(true);
+            console.log(response.json());
+          })
+          .then(() => {
+            fetchShares(setShares, setLoading, shares, setProfitnow, setProfit);
+            setupdate(false);
+          })
           .then(() => {
             alert("success");
             setData(null);

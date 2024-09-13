@@ -5,11 +5,11 @@ def compute_features(tr, fut, data):
     import matplotlib.pyplot as plt
     from sklearn.ensemble import RandomForestRegressor
     from sklearn.model_selection import train_test_split
-    from sklearn.preprocessing import StandardScaler
+    from sklearn.preprocessing import MinMaxScaler
     from sklearn.metrics import mean_squared_error
     import datetime
     import json
-    
+    scaler=MinMaxScaler()
     # Convert data to numpy array if not already
     data = np.array(data)
     
@@ -27,10 +27,21 @@ def compute_features(tr, fut, data):
             future.append(-1)
         else:
             future.append(0)
+    summ=[]
+    sumi=0
+    for i in range(fut,len(data)):
+        pos = np.sum([((data[i,4] - data[i-z,4]) / data[i,4]) >= 0.01 for z in range(0, fut + 1)])
+        neg = np.sum([((data[i,4] - data[i-z,4]) / data[i,4]) <= -0.01 for z in range(0, fut + 1)])
+        summ.append(sumi)
+        if pos > neg:
+            sumi+=1
+        elif neg > pos:
+            sumi-=1
 
     # Pad the future list with NaN values at the end to match the length of the DataFrame
     future = future + [5]*fut
-    
+    summ=[np.nan]*fut+summ
+
     def transform_timestamp(timestamp):
         dt = datetime.datetime.utcfromtimestamp(timestamp)
         new_dt = datetime.datetime(1970, 1, 1, dt.hour, dt.minute)  
@@ -40,10 +51,12 @@ def compute_features(tr, fut, data):
 
     # Add future labels to DataFrame
     transformed_times = np.array([transform_timestamp(ts) for ts in data[:, 0]])
-    data[:,0]=((transformed_times%100)+(transformed_times/100))
-    data=(data%100)+(data/100)
-    data=np.column_stack((data,future))
-    df = pd.DataFrame(data, columns=['timestamp','open', 'high', 'low', 'close', 'volume','future'])
+    
+    for i in range(0,len(data)-72,72):
+            data[i:i+72]=scaler.fit_transform(data[i:i+72])+1
+    
+    data=np.column_stack((data,summ,future))
+    df = pd.DataFrame(data, columns=['timestamp','open', 'high', 'low', 'close', 'volume','summ','future'])
 
     # Simple Moving Averages (SMA)
     df['SMA_5'] = df['close'].rolling(window=tr).mean()

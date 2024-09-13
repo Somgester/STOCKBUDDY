@@ -28,8 +28,12 @@ function App() {
     const fetchData = async () => {
       const share = localStorage.getItem("shares")
         ? JSON.parse(localStorage.getItem("shares"))
-        : "";
-      if (share === "") {
+        : "a";
+      const sh = localStorage.getItem("prof")
+        ? JSON.parse(localStorage.getItem("prof"))
+        : "a";
+      setProfit(sh);
+      if (share === "a" || sh === "a") {
         const res = await fetchShares(
           setShares,
           setLoading,
@@ -37,9 +41,12 @@ function App() {
           setProfitnow,
           setProfit
         );
+        console.log(sh);
         const rep = JSON.parse(res);
-        // setShares(rep); // Update shares state with fetched data
+        setShares(rep); // Update shares state with fetched data
         localStorage.setItem("shares", JSON.stringify(rep)); // Store shares in localStorage
+        localStorage.setItem("prof", JSON.stringify(sh));
+        setProfit(sh);
         fetchprof(setProfit, setShares, setProfitnow, rep); // Fetch profit data
         setLoading(false); // Set loading to false after fetching data
       } else {
@@ -52,12 +59,12 @@ function App() {
 
     const interval = setInterval(() => {
       fetchData(); // Fetch data every 10 seconds
-    }, 60000);
+    }, 15000);
 
     return () => {
       clearInterval(interval); // Clean up interval on component unmount
     };
-  }, []); // Dependency array ensures this effect runs whenever `shares` changes
+  }, [setLoading]); // Dependency array ensures this effect runs whenever `shares` changes
   const fetchmod = async () => {
     const modout = fetch("http://localhost:5000/api/model", {
       method: "GET",

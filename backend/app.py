@@ -36,8 +36,8 @@ def ge_data():
             'Content-Type': 'application/json',
         }
         final=requests.get(url,headers=headers)
-        final=final.json()
-        if res:
+        if res and final.ok:
+            final=final.json()
             return jsonify(round(final['ltp'],1),[round(final['open'],1),round(final['high'],1),res])
         else:
              return []
@@ -60,6 +60,7 @@ def buy_share():
         res=res.json()
         syy=res['data']['content'][0]['nse_scrip_code']
         check = Share.objects(symbol=syy)
+        print(check)
         if check:
             # print(check)
             check=check.first()
@@ -132,6 +133,7 @@ def graphdata():
     if data.ok:
         return data.json()
     return 'sorry'
+
 @app.route('/api/live', methods=['GET'])
 def graphdatalive():
     url='https://groww.in/v1/api/stocks_data/v1/tr_live_prices/exchange/NSE/segment/CASH/TITAGARH/latest'
@@ -144,6 +146,7 @@ def graphdatalive():
         dat=[z['ltp'],z['tsInMillis']]
         return [z['tsInMillis'],z['ltp']]
     return 'sorry'
+
 @app.route('/api/model', methods=['GET'])
 def modelhandler():
     # url='https://groww.in/v1/api/charting_service/v2/chart/exchange/NSE/segment/CASH/TITAGARH?endTimeInMillis=1830151100000&intervalInMinutes=5&startTimeInMillis=1720151100000'
@@ -158,5 +161,6 @@ def modelhandler():
         pred=smarty.modelhandle(z)
         return {"ans":pred}
     return 'sorry'
+    
 if __name__ == '__main__':
     app.run(debug=True)

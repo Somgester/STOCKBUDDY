@@ -1,9 +1,12 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { React, useState } from "react";
 import { MyContext } from "./context";
+import { fetchShares } from "./functions";
 const Stocks = () => {
-  const { load, shares, setport, setShares } = useContext(MyContext);
+  const { load, shares, setport, setShares, update, setupdate } =
+    useContext(MyContext);
   const [disabled, setDisabled] = useState(false);
+
   const sell = async (index, profit) => {
     setDisabled(true);
     const res = await fetch(
@@ -16,14 +19,39 @@ const Stocks = () => {
       }
     );
 
-    const updatedshares = shares.filter((_, i) => shares[i].symbol !== index);
+    const updatedShares = () => {
+      setupdate(true);
+      localStorage.setItem(
+        "shares",
+        JSON.stringify(shares.filter((share) => share.symbol !== index))
+      );
+      setShares(
+        JSON.stringify(shares.filter((share) => share.symbol !== index))
+      );
+      fetchShares();
+      setDisabled(false);
+      setupdate(false);
+    };
+    updatedShares();
     // console.log(updatedshares);
-    localStorage.setItem("shares", JSON.stringify(updatedshares));
-    setShares(updatedshares);
-    setDisabled(false);
 
     // console.log(res.json());
   };
+  // Example of data initialization
+  const [stocks, setStocks] = useState([]);
+
+  // useEffect(() => {
+  //   fetchData().then((data) => setStocks(data));
+  // }, []);
+  // useEffect(() => {
+  //   let sh = "";
+  //   const shj = () => {
+  //     while (sh == "") sh = localStorage.getItem("shares");
+  //     setShares(sh);
+  //   };
+  //   shj();
+  //   console.log(sh);
+  // }, []);
   const portchange = () => {
     setport(false);
   };
@@ -63,7 +91,7 @@ const Stocks = () => {
       <div class="login-box">
         {!shares && <h1>Loading..</h1>}
 
-        {shares !== null && (
+        {!update && shares !== null && (
           <>
             {!shares && <h1>No Shares</h1>}
             <div className="shares-container">

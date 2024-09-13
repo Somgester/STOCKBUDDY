@@ -14,6 +14,7 @@ export const MyContextProvider = ({ children }) => {
   const [profitnow, setProfitnow] = useState(0);
   const [chartData, setChartData] = useState(null);
   const [chart, setChart] = useState(null);
+  const [update, setupdate] = useState(false);
   return (
     <MyContext.Provider
       value={{
@@ -34,6 +35,8 @@ export const MyContextProvider = ({ children }) => {
         profitnow,
         setProfitnow,
         setProfit,
+        update,
+        setupdate,
         setport,
         setShares,
         setLoading,

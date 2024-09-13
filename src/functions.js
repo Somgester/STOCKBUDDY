@@ -36,6 +36,7 @@ const fetchShares = async (
     const oldprof = await fetch("http://localhost:5000/api/profit");
     const oldprofval = await oldprof.json();
     setProfitnow(tot);
+    localStorage.setItem("prof", JSON.stringify(oldprofval.profit));
     setProfit(oldprofval.profit);
     setShares(shareslist);
     // console.log("hello0", oldprofval);
@@ -93,6 +94,7 @@ const fetchprof = async (setProfit, setShares, setProfitnow, shares) => {
   setProfitnow(tot);
   // console.log(tot);
   setShares(shareslist);
+  localStorage.setItem("shares", JSON.stringify(shareslist));
   // console.log("fetchprof", shares);
   // setProfit(res.json().profit);
 };
