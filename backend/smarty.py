@@ -131,13 +131,13 @@ def modelhandle(data):
     import pytz
     from PIL import Image
 
-    tr = 8
-    fut = 8
+    tr = 12
+    fut = 12
     freedom = 2
     df_with_features,timi = compute_features(tr, fut, data)
 
     # Load the LSTM model
-    model = load_model(f'{tr}_{fut}min(pro).keras')
+    model = load_model(f'{tr}_{fut}min(pro3).keras')
     fut += freedom
     data = df_with_features
     closes=df_with_features['close']

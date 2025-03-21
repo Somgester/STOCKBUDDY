@@ -33,8 +33,13 @@ const Search = () => {
       );
       if (response.ok) {
         const data = await response.json();
+        if (data[0] == null) {
+          alert("enter valid symbol");
+          setLoading(false);
+          return;
+        }
         setData(data);
-        console.log(response);
+
         setLoading(false);
       } else alert("enter valid symbol");
     } catch (err) {
@@ -98,7 +103,6 @@ const Search = () => {
       <button class="button-52 hb" onClick={showsportfolio}>
         Portfolio
       </button>
-
       {load && <h1>Loading..</h1>}
       {data && (
         <div class="inputbox">
@@ -107,25 +111,29 @@ const Search = () => {
           <i></i>
         </div>
       )}
-      {data && <h1 className="h11">NAME:{data[1][2]}</h1>}
-      {data && <h1 className="h11">OPEN : {data[1][0].toFixed(1)}</h1>}
-      {data && <h1 className="h11">CURR : {data[0].toFixed(1)}</h1>}
-      {data && (
-        <h1 className="h11">
-          DIFF. : {data && (data[0] - data[1][0]).toFixed(1)}
-        </h1>
-      )}
 
-      <div>
-        {data && (
-          <>
-            {al && <h2>Please specify Quantity!</h2>}
-            <button class="button-52 hb" onClick={buyclick}>
-              BUY
-            </button>
-          </>
-        )}
-      </div>
+      {!load && (
+        <>
+          {data && <h1 className="h11">NAME:{data[1][2]}</h1>}
+          {data && <h1 className="h11">OPEN : {data[1][0].toFixed(1)}</h1>}
+          {data && <h1 className="h11">CURR : {data[0].toFixed(1)}</h1>}
+          {data && (
+            <h1 className="h11">
+              DIFF. : {data && (data[0] - data[1][0]).toFixed(1)}
+            </h1>
+          )}
+          <div>
+            {data && (
+              <>
+                {al && <h2>Please specify Quantity!</h2>}
+                <button class="button-52 hb" onClick={buyclick}>
+                  BUY
+                </button>
+              </>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
